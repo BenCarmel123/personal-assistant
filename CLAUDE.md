@@ -15,6 +15,10 @@
 ## Tech Stack
 - Python
 - LangChain
+- OpenAI (GPT-4o-mini)
+- Google Calendar API
+- FastAPI
+- Twilio
 
 ## Learning Philosophy
 - Balance independence and AI usage
@@ -39,6 +43,8 @@
 ## Commands
 - All slash commands must have a corresponding `.md` file in `.claude/commands/`
 - Never register commands globally (`~/.claude/commands/`) for this project — keep everything local and visible
+- **Whenever a new external API is added, add a test script to `scripts/` and include it in `/test-apis`**
+- **Whenever a package or library is installed, update `requirements.txt` immediately**
 
 ## Code Style Rules
 - **No comments indicating code changes** - Comments should describe what the code does, not that it was added/modified/removed
