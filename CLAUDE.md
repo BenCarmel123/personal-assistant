@@ -10,6 +10,7 @@
 - Personal assistant for everyday tasks, time management, and convenience
 - Learning environment - every decision is a teaching opportunity
 - First agentic GenAI project
+- See PRODUCT.md for full product vision and planned tools
 
 ## Tech Stack
 - Python
