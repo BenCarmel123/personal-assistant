@@ -15,6 +15,10 @@
 ## Tech Stack
 - Python
 - LangChain
+- OpenAI (GPT-4o-mini)
+- Google Calendar API
+- FastAPI
+- Twilio
 
 ## Learning Philosophy
 - Balance independence and AI usage
