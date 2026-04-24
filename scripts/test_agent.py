@@ -7,6 +7,5 @@ def test_agent():
     response = llm.invoke([HumanMessage(content="Say 'agent is working' and nothing else.")])
     print(f"Agent response: {response.content}")
 
-
 if __name__ == "__main__":
     test_agent()
