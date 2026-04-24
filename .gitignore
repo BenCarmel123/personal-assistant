@@ -6,3 +6,7 @@ __pycache__/
 .claude/
 credentials.json
 token.json
+contacts.json
+main.py
+CLAUDE.md
+PRODUCT.md
