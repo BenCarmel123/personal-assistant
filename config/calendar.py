@@ -25,6 +25,23 @@ CLIENT_CONFIG = {
 }
 
 def get_credentials():
+    # On Lambda (no filesystem to persist to, no browser to authorize with),
+    # build credentials directly from a long-lived refresh token in the env.
+    refresh_token = os.environ.get("GOOGLE_REFRESH_TOKEN")
+    if refresh_token:
+        creds = Credentials(
+            token=None,
+            refresh_token=refresh_token,
+            token_uri=GOOGLE_TOKEN_URI,
+            client_id=os.environ["GOOGLE_CLIENT_ID"],
+            client_secret=os.environ["GOOGLE_CLIENT_SECRET"],
+            scopes=SCOPES,
+        )
+        creds.refresh(Request())
+        return creds
+
+    # Local development: reuse/refresh a cached token, or run the one-time
+    # browser consent flow and cache its result.
     creds = None
     if os.path.exists(TOKEN_PATH):
         creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
