@@ -1,22 +1,25 @@
 from datetime import datetime
 from config.llm import llm
+from config.settings import OWNER_NAME
 from agent.domains.calendar.tools import add_event
-from langchain.agents import create_tool_calling_agent, AgentExecutor
-from langchain_core.prompts import ChatPromptTemplate
+from langchain.agents import create_agent
 
 tools = [add_event]
 
 today = datetime.now().strftime("%Y-%m-%d")
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system", f"You're Ben Carmel's personal assistant. Today is {today}."),
-    ("human", "{input}"),
-    ("placeholder", "{agent_scratchpad}"),
-])
-
-agent = create_tool_calling_agent(llm, tools, prompt)
-executor = AgentExecutor(agent=agent, tools=tools)
+agent = create_agent(
+    llm,
+    tools,
+    system_prompt=f"You're {OWNER_NAME}'s personal assistant. Today is {today}.",
+)
 
 def run(message: str) -> str:
-    result = executor.invoke({"input": message})
-    return result["output"]
+    result = agent.invoke({"messages": [{"role": "user", "content": message}]})
+    content = result["messages"][-1].content
+
+    if isinstance(content, str):
+        return content
+
+    # Gemini 3.x returns a list of content blocks; pull out the text parts.
+    return "".join(block.get("text", "") for block in content if isinstance(block, dict))
