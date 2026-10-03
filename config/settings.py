@@ -1,0 +1,9 @@
+OWNER_NAME = "Ben Carmel"
+TIMEZONE = "Asia/Jerusalem"
+
+PRIMARY_CALENDAR_ID = "primary"
+
+OAUTH_LOCAL_SERVER_PORT = 8080
+
+GEMINI_MODEL = "gemini-3.8-flash"
+DEFAULT_SERVER_PORT = 8000

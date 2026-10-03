@@ -3,7 +3,7 @@ from langchain_core.messages import HumanMessage
 
 
 def test_agent():
-    print("Testing agent (OpenAI LLM)...")
+    print("Testing agent (Gemini LLM)...")
     response = llm.invoke([HumanMessage(content="Say 'agent is working' and nothing else.")])
     print(f"Agent response: {response.content}")
 
