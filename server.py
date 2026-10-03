@@ -1,23 +1,20 @@
 import os
 from dotenv import load_dotenv
-from fastapi import FastAPI, Form, Response
-from twilio.twiml.messaging_response import MessagingResponse
-from agent.assistant import run
+from fastapi import FastAPI
+from mangum import Mangum
+from whatsapp.controller import router as whatsapp_router
 from config.settings import DEFAULT_SERVER_PORT
 
 load_dotenv()
 
 app = FastAPI()
+app.include_router(whatsapp_router)
 
 
-@app.post("/whatsapp")
-async def whatsapp(Body: str = Form(...), From: str = Form(...)):
-    reply_text = run(Body)
-
-    twiml = MessagingResponse()
-    twiml.message(reply_text)
-
-    return Response(content=str(twiml), media_type="application/xml")
+# Entry point AWS Lambda invokes; translates the Lambda event into an ASGI
+# request against the FastAPI app above, and the response back into Lambda's
+# expected shape. Irrelevant when running locally via `python server.py`.
+handler = Mangum(app)
 
 
 if __name__ == "__main__":

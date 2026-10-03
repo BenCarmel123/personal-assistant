@@ -14,7 +14,7 @@ agent = create_agent(
     system_prompt=f"You're {OWNER_NAME}'s personal assistant. Today is {today}.",
 )
 
-def run(message: str) -> str:
+def handle_message(message: str) -> str:
     result = agent.invoke({"messages": [{"role": "user", "content": message}]})
     content = result["messages"][-1].content
 
